@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+
+<br>
+
+<div class="h-screen bg-gray-800 flex rounded-md p-1 my-2 ">
+   <!-- Sidebar -->
+   <div id="sidebar" class="h-full w-16 sm:w-1/4  bg-gray-800 text-white flex flex-col rounded-md transition-all duration-300">
+    <!-- Sidebar Header with Toggle Icon -->
+    <div class="flex justify-between items-center p-4 border-b border-gray-700">
+      <h2 class="text-lg font-bold whitespace-nowrap overflow-hidden">Chat History</h2>
+      <div class="w-20 justify-end  ">
+        <button onclick="toggleSidebar()" class="text-white text-2xl focus:outline-none">
+          <!-- Heroicons Menu Icon (Outline) -->
+          <img class="h-9 w-9 max-w-9" src="{{url_for('static' , filename='side_navigation_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
+        </button>
+        <button onclick="createNewChat()" >
+          <img  class="h-9 w-9 max-w-9" src="{{url_for('static' , filename='chat_add_on_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar Content (Chat History) -->
+    <div id="sidebar-content" class="space-y-2 overflow-y-auto hidden sm:block flex-1 p-4 ">
+      <!-- <ul> -->
+        <!-- 
+        <li class="p-3 bg-gray-700 rounded hover:bg-gray-600 cursor-pointer">Chat 1</li>
+        <li class="p-3 bg-gray-700 rounded hover:bg-gray-600 cursor-pointer">Chat 2</li>
+        <li class="p-3 bg-gray-700 rounded hover:bg-gray-600 cursor-pointer">Chat 3</li>
+        -->
+      <!-- </ul> -->
+    </div>
+
+    <!-- New Chat Button (This stays visible) -->
+ 
+  </div>
+
+  <!-- Main Chat Area -->
+  <div  class="h-full w-3/4 bg-gray-100 flex flex-col transition-all duration-300 rounded-md shadow-md">
+    <!-- Header -->
+    <!-- <div class="p-4 bg-gray-200 border-b">
+      <h2 class="text-lg font-[poppins]">ChatBuddy</h2>
+    </div> -->
+
+    <!-- Chat Messages -->
+    <div id="conversationBox" class="flex-1 p-4 overflow-y-auto space-y-4 relative">
+
+      <div class="p-4 border-t absolute  top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-fit flex items-center gap-2 rounded-md font-[poppins] text-orange-500">
+        <h1>
+          What can I help with ?
+        </h1>
+      </div>
+  
+      <div class="p-4 border-t absolute bottom-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-fit flex items-center gap-2 rounded-md">
+        <textarea
+          id="messageInput"
+          placeholder="Type your message..."
+          rows="3"
+          cols="50"
+          class="flex-1 p-2 border rounded break-words focus:outline-none focus:ring focus:ring-blue-400 resize-none"
+        ></textarea>
+        <button
+          onclick="homesendMessage()"
+          class="p-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+        >
+          Send
+        </button>
+      </div>
+    
+    </div>
+    
+      
+    
+
+   <!-- Input Area -->
+
+  </div> 
+</div>
+
+   <br />
+
+{% endblock %}
