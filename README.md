@@ -62,9 +62,9 @@ This multi-purpose AI ChatApp leverages Google Gemini AI to provide intelligent,
 
 ### Chat Functionality
 
-- **GET** `/chat`: Render the chat interface.
+- **GET** `/chat/<int:chat_id>`: Render the chat interface.
 - **POST** `/chat`: Send a message and receive a response.
-- **POST** `/api/new_recent`: Create a new chat with an optional title.
+- **POST** `/user/chat`: Create a new chat with an optional title.
 - **POST** `/save/title`: Save a custom title for an existing chat.
 - **GET** `/api/load_chat/<recent_id>`: Load messages for a specific chat.
 - **DELETE** `/api/delete_chat/<recent_id>`: Delete a chat and its associated messages.
@@ -83,7 +83,7 @@ This multi-purpose AI ChatApp leverages Google Gemini AI to provide intelligent,
    ![alt text](<ChatApp/static//homepage.png>)
 2. **Login and Signup Pages**
    ![alt text](ChatApp/static/Login.png)
-   ![alt text](ChatApp/static/images/Sign-Up.png)
+   ![alt text](ChatApp/static/Sign-Up.png)
 3. **Chat Interface**
    ![alt text](<ChatApp/static//Realtime streaming.png>)
 
