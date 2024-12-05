@@ -23,11 +23,24 @@
     
           <!-- Menu Items -->
           <div class="hidden md:flex space-x-6 justify-center items-center">
-            <a href="/home" class="hover:text-gray-400 no-underline  hover:underline hover:underline-offset-3">Home</a>
-            <a href="/about" class="hover:text-gray-400 no-underline  hover:underline hover:underline-offset-3">About</a>
-            
-            <a href="/logout" class="hover:text-gray-400 no-underline  hover:underline hover:underline-offset-3"><button class=" bg-orange-400 px-2 py-1 font-[poppins] text-xl text-white rounded-md shadow ">Logout</button></a>
+            {% if current_user.is_authenticated %}
+              <!-- Show these links if the user is authenticated -->
+              <a href="/home" class="hover:text-gray-400 no-underline hover:underline hover:underline-offset-3">Home</a>
+              <a href="/about" class="hover:text-gray-400 no-underline hover:underline hover:underline-offset-3">About</a>
+              <a href="/logout" class="hover:text-gray-400 no-underline hover:underline hover:underline-offset-3">
+                <button class="bg-orange-400 px-2 py-1 font-[poppins] text-xl text-white rounded-md shadow">Logout</button>
+              </a>
+            {% else %}
+              <!-- Show these links if the user is not authenticated -->
+              <a href="/sign-up" class="hover:text-gray-400 no-underline hover:underline hover:underline-offset-3">
+                <button class="bg-yellow-500 px-2 py-1 font-[poppins] text-xl text-white rounded-md shadow">Sign Up</button>
+              </a>
+              <a href="/login" class="hover:text-gray-400 no-underline hover:underline hover:underline-offset-3">
+                <button class="bg-orange-400 px-2 py-1 font-[poppins] text-xl text-white rounded-md shadow">Log in</button>
+              </a>
+            {% endif %}
           </div>
+          
     
           <!-- Hamburger Icon -->
           <div class="md:hidden flex items-center">

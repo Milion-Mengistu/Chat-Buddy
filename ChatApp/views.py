@@ -186,11 +186,12 @@ def generate_title(chat_id):
         return jsonify({"error": "Content is required!"}), 400
 
     # Generate the title using the AI model or function
-    new_title = chat_with_google_ai(f"Summarize this conversation to at most 20 character: {content}")
-
-    if new_title:
+    new_title = chat_with_google_ai(f"generate title for this conversation to at most 20 character if it is greeting dont send any thing just say new chat: {content}")
+    title = new_title.strip()
+    if title:
         # Fetch the ChatSession from the database
         chat_session = ChatSession.query.get(chat_id)
+
 
         if not chat_session:
             return jsonify({"error": "ChatSession not found!"}), 404
@@ -200,8 +201,9 @@ def generate_title(chat_id):
             return jsonify({"error": "Unauthorized access!"}), 403
 
         # Update the ChatSession name and save to database
-        chat_session.name = new_title.strip()
+        chat_session.chat_name = title.strip()
         db.session.commit()
+        print(title)
 
         return jsonify({"title": new_title.strip(), "status": "success"})
     else:

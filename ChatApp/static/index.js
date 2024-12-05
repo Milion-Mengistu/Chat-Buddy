@@ -8,10 +8,39 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
       // Trigger the click event on the button
       document.getElementById("sendButton").click();
+
+
+    
   }
 });
 
- function sendMessage(chat_id) {
+function streamer(aiMessageDiv, aiMessage, conversationBox) {
+  let length = 0;
+  const interval = setInterval(() => {
+    aiMessageDiv.textContent += aiMessage[length++];
+    if (length >= aiMessage.length) {
+      clearInterval(interval);
+
+      // After the typing effect is complete, parse and highlight the content
+      let aiResponse = marked.parse(aiMessageDiv.textContent); // Markdown parsing
+      let languageMatch = aiResponse.match(/```(\w+)/); // Regex to detect language
+      if (languageMatch) {
+        let language = languageMatch[1]; // Extract language (e.g., 'javascript')
+        aiResponse = aiResponse.replace(
+          /```(\w+)([\s\S]*?)```/g,
+          `<pre><code class="language-$1">$2</code></pre>`
+        );
+      }
+
+      aiMessageDiv.innerHTML = aiResponse; // Inject parsed response with markdown
+      Prism.highlightAll(); // Apply syntax highlighting after the content is fully typed
+    }
+    conversationBox.scrollTop = conversationBox.scrollHeight;
+  }, 0.001);
+}
+
+
+function sendMessage(chat_id) {
   let input = document.getElementById("messageInput");
   let message = input.value.trim();
 
@@ -19,17 +48,13 @@ document.addEventListener("keydown", function (event) {
     let conversationBox = document.getElementById("conversationBox");
 
     let parentdiv = document.createElement("div");
-
     parentdiv.classList.add("flex", "items-end", "relative", "justify-end");
-
 
     // Append user message to the conversation box
     let userMessageDiv = document.createElement("div");
     userMessageDiv.classList.add(
-
       "bg-orange-400",
       "text-white",
-      
       "p-2",
       "rounded-lg",
       "max-w-xs",
@@ -40,6 +65,7 @@ document.addEventListener("keydown", function (event) {
     conversationBox.appendChild(parentdiv);
 
     sendChatMessage(chat_id, message, "user");
+
     // Send message to backend
     fetch("/chat", {
       method: "POST",
@@ -50,6 +76,8 @@ document.addEventListener("keydown", function (event) {
       .then(async (data) => {
         // Append chatbot's response
         let aiparentdiv = document.createElement("div");
+        aiparentdiv.classList.add("flex", "items-end", "relative", "justify-start");
+
         let aiMessageDiv = document.createElement("div");
         aiMessageDiv.classList.add(
           "bg-gray-300",
@@ -60,19 +88,42 @@ document.addEventListener("keydown", function (event) {
         );
 
         // Process chatbot response with Marked.js for Markdown
+        streamer(aiMessageDiv, data.response, conversationBox)
         aiMessageDiv.innerHTML = marked.parse(data.response);
 
         aiparentdiv.appendChild(aiMessageDiv);
         conversationBox.appendChild(aiparentdiv);
-      
 
         sendChatMessage(chat_id, data.response, "ai");
+
+        // Send AI response to generate the title
+        fetch(`/${chat_id}/generate_title`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: data.response }),
+        })
+          .then((titleResponse) => titleResponse.json())
+          .then((titleData) => {
+            if (titleData.status === "success") {
+              console.log("Title updated:", titleData.title);
+              // Optionally update the UI to reflect the new title
+              document.getElementById("chatTitle").textContent = titleData.title;
+            } else {
+              console.error("Failed to update title:", titleData.error);
+            }
+          })
+          .catch((err) => {
+            console.error("Error updating title:", err);
+          });
+      })
+      .catch((err) => {
+        console.error("Error sending message:", err);
       });
 
-      input.value = ""; // Clear input field
-
+    input.value = ""; // Clear input field
   }
 }
+
 
 
 
