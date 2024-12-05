@@ -10,11 +10,13 @@ from flask_migrate import Migrate
 
 
 
+
 oauth=OAuth()
 DB_NAME = 'database.db'
 db = SQLAlchemy()
 load_dotenv()
 migrate = Migrate()
+
 
 def create_app():
     app = Flask(__name__)

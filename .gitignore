@@ -1,4 +1,4 @@
-.env
-/instance
 /node_modules
+.env
+/instance 
 package-lock.json

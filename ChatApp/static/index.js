@@ -1,8 +1,17 @@
 
-/**
- * Handles sending a message in the chatbot interface.
- */
-function sendMessage(chat_id) {
+// /**
+//  * Handles sending a message in the chatbot interface.
+//  */
+
+document.addEventListener("keydown", function (event) {
+  // Check if the pressed key is "Enter"
+  if (event.key === "Enter") {
+      // Trigger the click event on the button
+      document.getElementById("sendButton").click();
+  }
+});
+
+ function sendMessage(chat_id) {
   let input = document.getElementById("messageInput");
   let message = input.value.trim();
 
@@ -10,14 +19,18 @@ function sendMessage(chat_id) {
     let conversationBox = document.getElementById("conversationBox");
 
     let parentdiv = document.createElement("div");
+
     parentdiv.classList.add("flex", "items-end", "relative", "justify-end");
+
 
     // Append user message to the conversation box
     let userMessageDiv = document.createElement("div");
     userMessageDiv.classList.add(
-      "bg-orange-300",
+
+      "bg-orange-400",
       "text-white",
-      "p-3",
+      
+      "p-2",
       "rounded-lg",
       "max-w-xs",
       "break-all"
@@ -26,43 +39,43 @@ function sendMessage(chat_id) {
     userMessageDiv.textContent = message;
     conversationBox.appendChild(parentdiv);
 
-    // Send user's message to the backend
-    fetch(`/chat/${chat_id}/message`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: message, sender: "user", chat_id: chat_id }),
-    })
-      .then(() => {
-        console.log("User message stored successfully.");
-      })
-      .catch((error) => console.error("Error storing user message:", error));
-
-    // Fetch chatbot's response (but do not add to HTML)
+    sendChatMessage(chat_id, message, "user");
+    // Send message to backend
     fetch("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: message }),
     })
       .then((response) => response.json())
-      .then((data) => {
-        // Log chatbot's response to the console (if needed)
-        console.log("Chatbot response:", data.response);
+      .then(async (data) => {
+        // Append chatbot's response
+        let aiparentdiv = document.createElement("div");
+        let aiMessageDiv = document.createElement("div");
+        aiMessageDiv.classList.add(
+          "bg-gray-300",
+          "text-black",
+          "p-2",
+          "rounded-lg",
+          "max-w-xs"
+        );
 
-        // Optionally store the chatbot's response in the backend
-        fetch(`/chat/${chat_id}/message`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: data.response, sender: "ai", chat_id: chat_id }),
-        }).then(() => {
-          console.log("Chatbot response stored successfully.");
-        });
-      })
-      .catch((error) => console.error("Error fetching chatbot response:", error));
+        // Process chatbot response with Marked.js for Markdown
+        aiMessageDiv.innerHTML = marked.parse(data.response);
 
-    conversationBox.scrollTop = conversationBox.scrollHeight; // Auto-scroll
-    input.value = ""; // Clear input field
+        aiparentdiv.appendChild(aiMessageDiv);
+        conversationBox.appendChild(aiparentdiv);
+      
+
+        sendChatMessage(chat_id, data.response, "ai");
+      });
+
+      input.value = ""; // Clear input field
+
   }
 }
+
+
+
 
 
 
@@ -101,34 +114,76 @@ function toggleSidebar() {
 }
 
 const homesendMessage = async () => {
-  try {
-    const new_chat_id = await createNewChat();
-    console.log(typeof new_chat_id); // Should log 'number'
+  
+  const new_chat_id = await createNewChat();
 
-    let input = document.getElementById("messageInput");
-    let message = input.value.trim();
+  let input = document.getElementById("messageInput2");
+  let message = input.value.trim();
+    
+  if (message !== "") {
+    let conversationBox = document.getElementById("conversationBox");
 
-    if (!message) {
-      console.error("Message input is empty!");
-      return;
-    }
+    let parentdiv = document.createElement("div");
 
-    // Send user message
-    await sendChatMessage(new_chat_id, message, "user");
+    parentdiv.classList.add("flex", "items-end", "relative", "justify-end");
 
-    // Get AI response
-    const ai_response = await sendChatMessageToAI(message);
 
-    // Send AI message
-    await sendChatMessage(new_chat_id, ai_response, "ai");
+    // Append user message to the conversation box
+    let userMessageDiv = document.createElement("div");
+    userMessageDiv.classList.add(
 
-    // Load messages after both user and AI messages are saved
-    await loadChatMessages(new_chat_id);
-  } catch (error) {
-    console.error("Error in homesendMessage:", error);
+      "bg-orange-400",
+      "text-white",
+      
+      "px-6",
+      "py-4",
+      "rounded-lg",
+      "max-w-xs",
+      "break-all"
+    );
+    parentdiv.appendChild(userMessageDiv);
+    userMessageDiv.textContent = message;
+    conversationBox.appendChild(parentdiv);
+
+    sendChatMessage(new_chat_id, message, "user");
+    // Send message to backend
+    fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: message }),
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        // Append chatbot's response
+        let aiparentdiv = document.createElement("div");
+        let aiMessageDiv = document.createElement("div");
+        aiMessageDiv.classList.add(
+          "bg-gray-300",
+          "text-black",
+          "px-6",
+          "py-4",
+          "rounded-lg",
+          "max-w-xs"
+        );
+
+        // Process chatbot response with Marked.js for Markdown
+        aiMessageDiv.innerHTML = marked.parse(data.response);
+
+        aiparentdiv.appendChild(aiMessageDiv);
+        conversationBox.appendChild(aiparentdiv);
+      
+
+        sendChatMessage(new_chat_id, data.response, "ai");
+        
+       
+      });
+      await loadChatMessages(new_chat_id)
+      window.location.href = "/home";
+      input.value = ""; // Clear input field
+      window.location.href = `/chat/${new_chat_id}`;
+
   }
-};
-
+}
 
 const createNewChat = async () => {
   try {
@@ -145,69 +200,32 @@ const createNewChat = async () => {
     }
 
     const data = await response.json();
-    
+
     // Validate the response structure
     if (!data.chat_id) {
       throw new Error("Invalid response from server: chat_id is missing");
     }
+    window.location.href = '/chat/' + data.chat_id;
 
     return data.chat_id; // Return the chat_id
+    
   } catch (error) {
     console.error("Error in createNewChat:", error.message);
     return null; // Return null to signal failure
   }
+ 
 };
 
-
-
-async function loadChats() {
-  try {
-      // Fetch chats from the backend
-      const response = await fetch('/user/chats', { method: 'GET' });
-      const chats = await response.json();
-
-      // Get the sidebar content element
-      const sidebarContent = document.getElementById('sidebar-content');
-
-      // Clear any existing chat list
-      sidebarContent.innerHTML = '';
-
-      // Create and append chat list items
-      const ul = document.createElement('ul');
-      ul.className='flex flex-col gap-1'
-      chats.forEach(chat => {
-          const li = document.createElement('li');
-          li.className = 'p-3 bg-gray-700 rounded hover:bg-gray-600 cursor-pointer';
-          li.textContent = chat.chat_name;
-
-          // Optional: Add click functionality to load chat
-          li.onclick = () => loadChatMessages(chat.id);
-
-          // const div = document.createElement('div');
-          // const button = document.createElement('button');
-          // button.textContent='X'
-          // button.className = 'btn bg-red-100'
-          // div.appendChild(button);
-
-          // li.appendChild(div);
-          ul.appendChild(li);
-      });
-
-      sidebarContent.appendChild(ul);
-  } catch (error) {
-      console.error('Failed to load chats:', error);
-  }
-}
 
 // Example function to load chat messages when a chat is clicked
 async function loadChatMessages(chatId) {
   console.log('Loading messages for chat:', chatId);
   window.location.href = '/chat/' + chatId;
-  // Implement message fetching and display logic here
+
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Select all message content elements that are from the AI
   const aiMessages = document.querySelectorAll('.message-content');
 
@@ -247,11 +265,8 @@ function sendChatMessage(chat_id, content, sender) {
     });
 }
 
-// Example usage
-const chat_id = 123; // Replace with the actual chat ID
-const content = "Hello, how are you?"; // Replace with the actual message content
-const sender = "user"; // Specify the sender ("user" or "bot")
-sendChatMessage(chat_id, content, sender);
+
+
 
 async function sendChatMessageToAI(message) {
   const payload = { message: message };
@@ -270,8 +285,7 @@ async function sendChatMessageToAI(message) {
 }
 
 // Example usage
-const message = "What is the weather like today?"; // Replace with your message
-sendChatMessageToAI(message);
+
 
 function loginWithGoogle(event) {
   event.preventDefault();
@@ -279,4 +293,29 @@ function loginWithGoogle(event) {
 }
 
 
-
+function deleteChat(chatId) { 
+  
+  fetch('/delete_chat', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ chatId: chatId })
+  })
+  .then((response) => {
+      if (response.ok) {
+          window.location.href = '/home';
+      } else {
+          return response.json();
+      }
+  })
+  .then((data) => {
+      if (data && data.status === 'error') {
+          alert(data.message);  // Show error message
+      }
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+      alert('An unexpected error occurred.');
+  });
+}

@@ -17,11 +17,11 @@
         <input id="password" type="password" name="password" placeholder="********" autocomplete="current-password" 
           class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner" required />
         <button type="submit" 
-          class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+          class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-orange-400  shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
           Log in
         </button>
         <div class="flex justify-between mt-4 text-xs text-gray-500">
-          <a href="{{url_for('auth.login_google')}}" class="hover:text-black">continue with Gmail </a>
+         <span>Continue with <a href="{{url_for('auth.login_google')}}" class="hover:text-black"> Gmail </a></span>
           <a href="/sign-up" class="hover:text-black">Create an account</a>
         </div>
       </form>

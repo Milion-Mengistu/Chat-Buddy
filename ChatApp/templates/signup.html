@@ -3,6 +3,8 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
+
+<br>
 <br>
 
 <div class="grid min-h-screen place-items-center rounded-md">
@@ -21,12 +23,22 @@
         <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-orange-500  shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
           Sign up
         </button>
-        <p class="flex justify-between inline-block mt-4 text-xs text-gray-500 cursor-pointer hover:text-black">Already registered?</p>
-        <p><a href="/login" class="inline text-cyan-300 hover:text-cyan-500 hover:underline hover:underline-offset-1 "> Login </a></p>
-        <p> <span>Continue with </span><a href="{{url_for('auth.login_google')}}" class="inline text-cyan-300 hover:text-cyan-500 hover:underline hover:underline-offset-1 "> Gmail </a></p>
-        
+        <br>
+        <div class="h-5 justify-between  ">
+          <br>
+          <p>Already registered?
+            <a href="/login" class="inline text-cyan-300 hover:text-cyan-500 hover:underline hover:underline-offset-1 "> Login </a>
+          </p>
+          <p> <span>Continue with </span><a href="{{url_for('auth.login_google')}}" class="inline text-cyan-300 hover:text-cyan-500 hover:underline hover:underline-offset-1 "> Gmail </a></p>
+         
+        </div>
+
       </form>
+      <br>
+      <br>
     </div>
   </div>
+  <br>
+  <br>
 
 {% endblock %}

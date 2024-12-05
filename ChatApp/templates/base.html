@@ -11,13 +11,13 @@
     <title> {% block title %} home {% endblock %}
     </title>
   </head>
-  <body class="bg-gray-800">
-    <header class="bg-gray-800">
-      <nav class="bg-black text-white">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+  <body class=" bg-gray-800 max-h-full max-w-full  ">
+    <header class="bg-gray-800 w-full ">
+      <nav class="bg-gray-800 text-white ">
+        <div class="container mx-auto overflow-hidden flex justify-between items-center px-3 py-4">
           <!-- Logo -->
           <div class="text-2xl font-bold justify-center items-center py-1 px-2 h-9">
-               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" fill-rule="evenodd" class="h-10 w-10 inline"><g><path d="M17.75 21v-8A1.75 1.75 0 0 0 16 11.25H6A1.75 1.75 0 0 0 4.25 13v8c0 .967.784 1.75 1.75 1.75h10A1.75 1.75 0 0 0 17.75 21zm-1.5-8v8a.25.25 0 0 1-.25.25H6a.25.25 0 0 1-.25-.25v-8a.25.25 0 0 1 .25-.25h10a.25.25 0 0 1 .25.25z" fill="#ff8201" opacity="1" data-original="#000000" class=""></path><path d="M19.75 19v-3.5A1.75 1.75 0 0 0 18 13.75h-1a.75.75 0 0 0-.75.75V20c0 .414.336.75.75.75h1A1.75 1.75 0 0 0 19.75 19zm-2 .25v-4H18a.25.25 0 0 1 .25.25V19a.25.25 0 0 1-.25.25zM4 20.75h1l.039-.001A.75.75 0 0 0 5.75 20v-5.5a.75.75 0 0 0-.75-.75H4a1.75 1.75 0 0 0-1.75 1.75V19c0 .967.784 1.75 1.75 1.75zm.25-1.5H4a.25.25 0 0 1-.25-.25v-3.5a.25.25 0 0 1 .25-.25h.25z" fill="#ff8201" opacity="1" data-original="#000000" class=""></path><circle cx="8.5" cy="15" r="1" fill="#ff8201" opacity="1" data-original="#000000" class=""></circle><circle cx="13.5" cy="15" r="1" fill="#ff8201" opacity="1" data-original="#000000" class=""></circle><path d="M3.75 16V9a.75.75 0 0 0-1.5 0v7a.75.75 0 0 0 1.5 0z" fill="#ff8201" opacity="1" data-original="#000000" class=""></path><path d="M3 6.25a1.75 1.75 0 1 0 .001 3.501A1.75 1.75 0 0 0 3 6.25zm0 1.5a.25.25 0 1 1 0 .5.25.25 0 0 1 0-.5zM22.75 3c0-.464-.184-.909-.513-1.237A1.746 1.746 0 0 0 21 1.25h-7c-.464 0-.909.184-1.237.513A1.746 1.746 0 0 0 12.25 3v3.667c0 .966.784 1.75 1.75 1.75h.689l1.447 1.447a.75.75 0 0 0 1.061 0l1.447-1.447H21a1.75 1.75 0 0 0 1.75-1.75zm-1.5 0v3.667a.25.25 0 0 1-.25.25h-2.667a.752.752 0 0 0-.53.219l-1.136 1.137-1.137-1.137a.75.75 0 0 0-.53-.219h-1a.25.25 0 0 1-.25-.25V3a.25.25 0 0 1 .25-.25h7a.25.25 0 0 1 .25.25zM7.971 18.495a4.28 4.28 0 0 0 6.058 0 .749.749 0 1 0-1.06-1.06 2.787 2.787 0 0 1-3.938 0 .749.749 0 1 0-1.06 1.06z" fill="#ff8201" opacity="1" data-original="#000000" class=""></path><path d="M3 6.25a1.75 1.75 0 1 0 .001 3.501A1.75 1.75 0 0 0 3 6.25zm0 1.5a.25.25 0 1 1 0 .5.25.25 0 0 1 0-.5zM22.75 3c0-.464-.184-.909-.513-1.237A1.746 1.746 0 0 0 21 1.25h-7c-.464 0-.909.184-1.237.513A1.746 1.746 0 0 0 12.25 3v3.667c0 .966.784 1.75 1.75 1.75h.689l1.447 1.447a.75.75 0 0 0 1.061 0l1.447-1.447H21a1.75 1.75 0 0 0 1.75-1.75zm-1.5 0v3.667a.25.25 0 0 1-.25.25h-2.667a.752.752 0 0 0-.53.219l-1.136 1.137-1.137-1.137a.75.75 0 0 0-.53-.219h-1a.25.25 0 0 1-.25-.25V3a.25.25 0 0 1 .25-.25h7a.25.25 0 0 1 .25.25zM7.971 18.495a4.28 4.28 0 0 0 6.058 0 .749.749 0 1 0-1.06-1.06 2.787 2.787 0 0 1-3.938 0 .749.749 0 1 0-1.06 1.06z" fill="#ff8201" opacity="1" data-original="#000000" class=""></path></g></svg>
+               <img class="h-10 w-10 inline" src="{{url_for('static',filename= 'logo.svg')}}" alt="ChatBUDDY logo">
                <p class="inline h-6">Chat<span class="bg-orange-500 px-1  ">BUDDY</span></p>
           </div>
     
@@ -39,35 +39,33 @@
         <div id="mobile-menu" class="hidden md:hidden">
           <a href="#" class="block px-6 py-2 hover:bg-gray-800">Home</a>
           <a href="#" class="block px-6 py-2 hover:bg-gray-800">About</a>
-          <a href="#" class="block px-6 py-2 hover:bg-gray-800">Services</a>
+          
           <a href="#" class="block px-6 py-2 hover:bg-gray-800">Contact</a>
+          
         </div>
       </nav>
           </header>
           
+          
+          
           {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
-              <ul class="flash-messages">
               {% for category, message in messages %}
-                  <li class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                       {{ message }}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </li>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
               {% endfor %}
-              </ul>
           {% endif %}
       {% endwith %}
-      
     <!-- main content -->
     {% block content %}
-    {% endblock %}
 
-    <br>
+    {% endblock %}
 
     <script src="{{ url_for('static', filename='index.js') }}"></script>
     <script src="{{url_for('static', filename='bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
           loadChats(); // Load chats when the page loads
