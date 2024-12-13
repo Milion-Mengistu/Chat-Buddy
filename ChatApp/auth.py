@@ -34,7 +34,7 @@ def login():
 def logout():
     logout_user()
     flash("Logged out successfully!", "info")  # Flash info message
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('views.welcome'))
 
 
 @auth.route('/login/google')

@@ -1,4 +1,4 @@
-# Multi-Purpose AI ChatApp
+# ChatBUDDY AI assistant
 
 A multi-functional ChatApp powered by Google Gemini AI and Flask. Designed to assist users in various domains, from educational support and creative ideation to general queries, this ChatApp offers intuitive and interactive user experiences.
 
@@ -65,13 +65,13 @@ This multi-purpose AI ChatApp leverages Google Gemini AI to provide intelligent,
 - **GET** `/chat/<int:chat_id>`: Render the chat interface.
 - **POST** `/chat`: Send a message and receive a response.
 - **POST** `/user/chat`: Create a new chat with an optional title.
-- **POST** `/save/title`: Save a custom title for an existing chat.
+- **POST** `/<chat_id>/generate_title`: Save a custom title for an existing chat.
 - **GET** `/api/load_chat/<recent_id>`: Load messages for a specific chat.
-- **DELETE** `/api/delete_chat/<recent_id>`: Delete a chat and its associated messages.
+- **DELETE** `/delete_chat`: Delete a chat and its associated messages.
 
 ### AI Integration
 
-- **POST** `/generate/title`: Generate a concise title for a conversation using AI.
+- **POST** `/<chat_id>/generate_title`: Generate a concise title for a conversation using AI.
 
 ---
 

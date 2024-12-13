@@ -1,16 +1,11 @@
 
-// /**
-//  * Handles sending a message in the chatbot interface.
-//  */
 
 document.addEventListener("keydown", function (event) {
   // Check if the pressed key is "Enter"
   if (event.key === "Enter") {
-      // Trigger the click event on the button
-      document.getElementById("sendButton").click();
+    // Trigger the click event on the button
+    document.getElementById("sendButton").click();
 
-
-    
   }
 });
 
@@ -48,7 +43,7 @@ function sendMessage(chat_id) {
     let conversationBox = document.getElementById("conversationBox");
 
     let parentdiv = document.createElement("div");
-    parentdiv.classList.add("flex", "items-end", "relative", "justify-end");
+    parentdiv.classList.add("flex", "items-end", "relative", "justify-end", 'w-3/4');
 
     // Append user message to the conversation box
     let userMessageDiv = document.createElement("div");
@@ -57,8 +52,8 @@ function sendMessage(chat_id) {
       "text-white",
       "p-2",
       "rounded-lg",
-      "max-w-xs",
-      "break-all"
+      "max-w-fit",
+      "break-word"
     );
     parentdiv.appendChild(userMessageDiv);
     userMessageDiv.textContent = message;
@@ -125,11 +120,6 @@ function sendMessage(chat_id) {
 }
 
 
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -154,23 +144,18 @@ function toggleSidebar() {
   newChatButton.classList.toggle('hidden')
   sidebar.classList.toggle('w-3/4');
 
-
-
   mainContent.classList.toggle('w-full');
   mainContent.classList.toggle('w-3/4');
 
-  // Hide the sidebar content and show only the "New Chat" button when collapsed
-  ; // Hide chat history and items
-  ; // Hide the button if needed when collapsed
 }
 
 const homesendMessage = async () => {
-  
+
   const new_chat_id = await createNewChat();
 
   let input = document.getElementById("messageInput2");
   let message = input.value.trim();
-    
+
   if (message !== "") {
     let conversationBox = document.getElementById("conversationBox");
 
@@ -178,16 +163,13 @@ const homesendMessage = async () => {
 
     parentdiv.classList.add("flex", "items-end", "relative", "justify-end");
 
-
     // Append user message to the conversation box
     let userMessageDiv = document.createElement("div");
     userMessageDiv.classList.add(
 
       "bg-orange-400",
       "text-white",
-      
-      "px-6",
-      "py-4",
+      "p-2",
       "rounded-lg",
       "max-w-xs",
       "break-all"
@@ -222,16 +204,16 @@ const homesendMessage = async () => {
 
         aiparentdiv.appendChild(aiMessageDiv);
         conversationBox.appendChild(aiparentdiv);
-      
+
 
         sendChatMessage(new_chat_id, data.response, "ai");
-        
-       
+
+
       });
-      await loadChatMessages(new_chat_id)
-      window.location.href = "/home";
-      input.value = ""; // Clear input field
-      window.location.href = `/chat/${new_chat_id}`;
+    await loadChatMessages(new_chat_id)
+    window.location.href = "/home";
+    input.value = ""; // Clear input field
+    window.location.href = `/chat/${new_chat_id}`;
 
   }
 }
@@ -259,12 +241,12 @@ const createNewChat = async () => {
     window.location.href = '/chat/' + data.chat_id;
 
     return data.chat_id; // Return the chat_id
-    
+
   } catch (error) {
     console.error("Error in createNewChat:", error.message);
     return null; // Return null to signal failure
   }
- 
+
 };
 
 
@@ -344,29 +326,29 @@ function loginWithGoogle(event) {
 }
 
 
-function deleteChat(chatId) { 
-  
+function deleteChat(chatId) {
+
   fetch('/delete_chat', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ chatId: chatId })
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ chatId: chatId })
   })
-  .then((response) => {
+    .then((response) => {
       if (response.ok) {
-          window.location.href = '/home';
+        window.location.href = '/home';
       } else {
-          return response.json();
+        return response.json();
       }
-  })
-  .then((data) => {
+    })
+    .then((data) => {
       if (data && data.status === 'error') {
-          alert(data.message);  // Show error message
+        alert(data.message);  // Show error message
       }
-  })
-  .catch((error) => {
+    })
+    .catch((error) => {
       console.error('Error:', error);
       alert('An unexpected error occurred.');
-  });
+    });
 }

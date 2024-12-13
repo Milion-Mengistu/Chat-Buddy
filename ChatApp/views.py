@@ -35,7 +35,6 @@ def home():
 @views.route('/chat/<int:chat_id>', methods=['GET', 'POST'])
 @login_required
 def chatPage(chat_id):
-    # Fetch the chat session and messages for the logged-in user
     chat = ChatSession.query.filter_by(id=chat_id, user_id=current_user.id).first()
     if not chat:
         return jsonify({"error": "Chat not found or unauthorized access"}), 404
@@ -61,7 +60,6 @@ def chat():
         # Call the function to interact with Google's Generative AI
         ai_reply = chat_with_google_ai(message)
 
-     
 
         # Return the AI response back to the frontend
         return jsonify({"response": ai_reply})
@@ -113,9 +111,8 @@ def chat_messages(chat_id):
     # Serialize and return the chat messages
     return jsonify([message.serialize() for message in messages])
 
+
 # For creating a new message in the chat
-
-
 @views.route('/chat/<int:chat_id>/message', methods=['POST'])
 @login_required
 def create_message(chat_id):
@@ -186,12 +183,11 @@ def generate_title(chat_id):
         return jsonify({"error": "Content is required!"}), 400
 
     # Generate the title using the AI model or function
-    new_title = chat_with_google_ai(f"generate title for this conversation to at most 20 character if it is greeting dont send any thing just say new chat: {content}")
+    new_title = chat_with_google_ai(f"generate title for this conversation to at most 20 character if it is greeting dont send any thing just say New chat: {content}")
     title = new_title.strip()
     if title:
         # Fetch the ChatSession from the database
         chat_session = ChatSession.query.get(chat_id)
-
 
         if not chat_session:
             return jsonify({"error": "ChatSession not found!"}), 404
@@ -208,6 +204,7 @@ def generate_title(chat_id):
         return jsonify({"title": new_title.strip(), "status": "success"})
     else:
         return jsonify({"error": "Failed to generate a title!"}), 500
+    
 
 def chat_with_google_ai(message):
     print(f"Sending user input to Generative AI: {message}")

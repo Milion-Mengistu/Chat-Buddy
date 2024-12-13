@@ -8,17 +8,17 @@
 
 <div class="h-screen bg-gray-800 flex rounded-md p-1 my-2 ">
    <!-- Sidebar -->
-   <div id="sidebar" class="h-full w-16 sm:w-1/4  bg-gray-800 text-white flex flex-col rounded-md transition-all duration-300">
+   <div id="sidebar" class="h-full w-16 sm:w-3/4  bg-gray-800 text-white flex flex-col rounded-md transition-all duration-300">
     <!-- Sidebar Header with Toggle Icon -->
     <div class="flex justify-between items-center p-4 border-b border-gray-700">
      
       <div class="w-20 justify-end  ">
         <button onclick="toggleSidebar()" class="text-white text-2xl focus:outline-none">
           <!-- Heroicons Menu Icon (Outline) -->
-          <img class="h-7 w-7 max-w-9" src="{{url_for('static' , filename='side_navigation_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
+          <img class="h-7 w-7 max-w-9" src="{{url_for('static' , filename='images/side_navigation_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
         </button>
         <button onclick="createNewChat()" >
-          <img  class="h-7 w-7 max-w-9" src="{{url_for('static' , filename='chat_add_on_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
+          <img  class="h-7 w-7 max-w-9" src="{{url_for('static' , filename='images/chat_add_on_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png')}}" alt="">
         </button>
       </div>
     </div>

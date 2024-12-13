@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
  
    
     <title> {% block title %} home {% endblock %}
@@ -44,16 +44,14 @@
     
           <!-- Hamburger Icon -->
           <div class="md:hidden flex items-center">
-            <img id="menu-toggle" class="h-9 " src="{{url_for('static',filename='menu_open.png')}}" alt="" srcset="">
+            <img id="menu-toggle" class="h-9 " src="{{url_for('static',filename='images/menu_open.png')}}" alt="" srcset="">
             </div>
         </div>
     
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
-          <a href="#" class="block px-6 py-2 hover:bg-gray-800">Home</a>
-          <a href="#" class="block px-6 py-2 hover:bg-gray-800">About</a>
-          
-          <a href="#" class="block px-6 py-2 hover:bg-gray-800">Contact</a>
+          <a href="/home" class="block px-6 py-2 hover:bg-gray-800">Home</a>
+          <a href="about" class="block px-6 py-2 hover:bg-gray-800">About</a>
           
         </div>
       </nav>
@@ -76,23 +74,9 @@
 
     {% endblock %}
 
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
-    <script src="{{url_for('static', filename='bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          loadChats(); // Load chats when the page loads
-      });
-  </script>
-  <script>
-    // Convert messages with the "markdown-message" class
-    document.querySelectorAll('.markdown-message').forEach((element) => {
-      // Get the raw Markdown content from the data attribute
-      const rawMarkdown = element.getAttribute('data-markdown');
-      // Render Markdown into the element's HTML
-      element.innerHTML = marked(rawMarkdown);
-    });
-  </script>
-    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+   
   </body>
 </html>
